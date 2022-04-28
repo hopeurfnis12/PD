@@ -10,8 +10,8 @@
 
 ### Запуск:
 * `git clone https://github.com/hopeurfnis12/PD.git`
-* `go get github.com/go-sql-driver/mysql` - скачать MySQL Driver
-	> если выходит ошибка:  `go.mod file not found in current directory or any parent directory.`, то попробуйте ввести `go env -w GO111MODULE=off`
+* `go get github.com/go-sql-driver/mysql` - скачать **MySQL Driver**
+	> если выходит ошибка:  `go.mod file not found in current directory or any parent directory.` то попробуйте ввести `go env -w GO111MODULE=off`
 * Запустить исполняемый файл: запустить ...
 
 ## Roadmap:
