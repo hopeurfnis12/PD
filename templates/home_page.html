@@ -3,15 +3,49 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/body.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/header.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/footer.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
 	<title>Home Page</title>
 </head>
 <body>
 	<header>
-		<h1>Home Page</h1>
+		<div class="header-div">
+			<div class="logo-container">
+				<a href="/" id="logo"><img src="/static/icons/book.svg">Diary</a>
+			</div>
+			<nav class="navigators">
+				<a id="asd" href="/subjects">SUBJECTS</a>
+				<a id="home" href="/" id="home">HOME</a>
+			</nav>
+		</div>
 	</header>
 
 	<main>
-		
+		<h1>Nunito_Light</h1>
+		<h2>Noto_Sans_ExtraLight</h2>
+		<h3>Ceveat_Regular</h3>
+		{{ if eq .Name "Bob" }}
+		<p>Пользовать {{ .Name }}</p>
+		<p>Money {{ .Money }}</p>
+		<p>Age {{ .Age }}</p>
+		<p>Avg_grades {{ .Avg_grades }}</p>
+		{{ else }}
+		no bob
+		{{ end }}
+
+		<ul>
+			{{ range .Hobbies }}
+				<li>
+					<b> {{ . }} </b>
+				</li>
+				{{ else }}
+				<h3> empty </h3>
+			{{ end }}
+		</ul>
 	</main>
 
 	<footer>
