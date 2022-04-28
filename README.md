@@ -4,15 +4,14 @@
 Веб-приложение где составляешь и следишь за успеваемостью по предметам
 
 ### Требовании:
+* [Git](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop)
 * [Golang](https://go.dev/doc/install)
 * [MySQL](https://dev.mysql.com/downloads/mysql/)
-* [Git](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop)
 
 ### Запуск:
 * `git clone https://github.com/hopeurfnis12/PD.git`
-* Скачать **golang** 
 * `go get github.com/go-sql-driver/mysql` - скачать MySQL Driver
-  > если пишет `go.mod file not found in current directory or any parent directory.`, то попробуйте ввести в терминале `go env -w GO111MODULE=off`
+> если пишет выходит ошибкач:  `go.mod file not found in current directory or any parent directory.`, то попробуйте ввести `go env -w GO111MODULE=off`
 * Запустить исполняемый файл: запустить ...
 
 ## Roadmap:
