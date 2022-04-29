@@ -1,0 +1,31 @@
+{{ define "header" }}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/body.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/header.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/footer.css">
+	<title>Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+	<header>
+		<div class="header-div">
+			<div class="logo-container">
+				<a href="/" id="logo"><img src="/static/icons/book.svg">Diary</a>
+			</div>
+			<nav class="header-navigators">
+				<a id="add" href="/add/">ADD</a>
+				<a id="subjects" href="/subjects/">SUBJECTS</a>
+				<a id="home" href="/" id="home">HOME</a>
+			</nav>
+		</div>
+	</header>
+    
+{{ end }}

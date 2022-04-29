@@ -1,55 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/body.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/header.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/footer.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/fonts.css">
-	<title>Home Page</title>
-</head>
-<body>
-	<header>
-		<div class="header-div">
-			<div class="logo-container">
-				<a href="/" id="logo"><img src="/static/icons/book.svg">Diary</a>
-			</div>
-			<nav class="navigators">
-				<a id="asd" href="/subjects">SUBJECTS</a>
-				<a id="home" href="/" id="home">HOME</a>
-			</nav>
-		</div>
-	</header>
+{{ define "home_page" }}
+
+{{ template "header" }}
 
 	<main>
-		<h1>Nunito_Light</h1>
-		<h2>Noto_Sans_ExtraLight</h2>
-		<h3>Ceveat_Regular</h3>
-		{{ if eq .Name "Bob" }}
-		<p>Пользовать {{ .Name }}</p>
-		<p>Money {{ .Money }}</p>
-		<p>Age {{ .Age }}</p>
-		<p>Avg_grades {{ .Avg_grades }}</p>
+		
+		{{ range . }}
+			<div class="subject">
+					<a href="/subject/{{ .Id }}" class="btn-info">
+						<h1> {{ .Subject }} </h1> <img src="/static/icons/angle-right.svg">
+					</a>
+					<h2> Баллы: {{ .Sum }} </h2>
+			</div>
 		{{ else }}
-		no bob
+			<h1>Пусто...</h1>
 		{{ end }}
-
-		<ul>
-			{{ range .Hobbies }}
-				<li>
-					<b> {{ . }} </b>
-				</li>
-				{{ else }}
-				<h3> empty </h3>
-			{{ end }}
-		</ul>
 	</main>
 
-	<footer>
-		
-	</footer>
-</body>
-</html>
+{{ template "footer" }}
+
+{{ end }}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -8,50 +9,95 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type User struct {
-	Name       string
-	Age        uint16
-	Money      int16
-	Avg_grades float64
-	Hobbies    []string
+type Subjects struct {
+	Id      uint16
+	Subject string
+	Sum     float32
 }
 
-//type Subjects struct {
-// Subject string  `json:"subject"`
-// Score   float64 `json:"score"`
-//}
+var subjs = []Subjects{}
 
-// func (u *User) getAllInfo() string {
-// 	return fmt.Sprintf("User name: %s\n Age: %d\nMoney: %d", u.Name, u.Age, u.Money)
-// }
-
-// func (u *User) setNewName(newName string) {
-// 	u.Name = newName
-// }
-
-var tmpl *template.Template
-
-func init() {
-	tmpl = template.Must(template.ParseGlob("templates/*.html"))
-}
-
+/* ///////////////// HOME ///////////////// */
 func home_page(w http.ResponseWriter, r *http.Request) {
-	bob := User{"Bob", 25, -50, 4.2, []string{"Info", "RED", "Coding"}}
-	//bob.money = -23
-	//bob.setNewName("asd")
-	//fmt.Fprintf(w, bob.getAllInfo())
-	tmpl.ExecuteTemplate(w, "home_page.html", bob)
+	t, err := template.ParseFiles("templates/home_page.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		panic(err)
+	}
+
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/diary")
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	res, err := db.Query("SELECT * FROM `subjects`")
+	if err != nil {
+		panic(err)
+	}
+
+	subjs = []Subjects{}
+	for res.Next() {
+		var subj Subjects
+		err = res.Scan(&subj.Id, &subj.Subject, &subj.Sum)
+		if err != nil {
+			panic(err)
+		}
+
+		subjs = append(subjs, subj)
+	}
+
+	t.ExecuteTemplate(w, "home_page", subjs)
 }
 
-func contacts_page(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<b>Main text</b>")
+/* ///////////////// SUBJECTS ///////////////// */
+func subjects_page(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/subjects_page.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		panic(err)
+	}
+	t.ExecuteTemplate(w, "subjects_page", nil)
+}
+
+/* ///////////////// ADD ///////////////// */
+func add_page(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/add_page.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		panic(err)
+	}
+	t.ExecuteTemplate(w, "add_page", nil)
+}
+
+/* ///////////////// SAVE ///////////////// */
+func save(w http.ResponseWriter, r *http.Request) {
+	subj := r.FormValue("subj")
+	sum := r.FormValue("sum")
+
+	if subj == "" || sum == "" {
+		http.Redirect(w, r, "/add#error", http.StatusSeeOther)
+	} else {
+		db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/diary")
+		if err != nil {
+			panic(err)
+		}
+		defer db.Close()
+
+		insert, err := db.Query(fmt.Sprintf("INSERT INTO `subjects` (`subject`, `sum`) VALUES('%s', '%s')", subj, sum))
+		if err != nil {
+			panic(err)
+		}
+		defer insert.Close()
+
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}
 }
 
 func handleRequest() {
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static", fs))
 	http.HandleFunc("/", home_page)
-	http.HandleFunc("/contacts/", contacts_page)
+	http.HandleFunc("/subjects/", subjects_page)
+	http.HandleFunc("/add/", add_page)
+	http.HandleFunc("/save/", save)
 	http.ListenAndServe(":7272", nil)
 }
 
@@ -59,32 +105,4 @@ func handleRequest() {
 func main() {
 	fmt.Println("Server is started (to stop press: 'ctrl' + 'c')")
 	handleRequest()
-	// db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/diary")
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// defer db.Close()
-
-	// // insert, err := db.Query("INSERT INTO `subjects` (`subject`, `score`) VALUES('Математика', 5)")
-	// // if err != nil {
-	// // 	panic(err)
-	// // }
-	// // defer insert.Close()
-
-	// res, err := db.Query("SELECT `subject`, `score` FROM `subjects`")
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// for res.Next() {
-	// 	var subjects Subjects
-	// 	err = res.Scan(&subjects.Subject, &subjects.Score)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-
-	// 	fmt.Println(fmt.Sprintf("Subject: %s, Score: %f", subjects.Subject, subjects.Score))
-	// }
-
 }

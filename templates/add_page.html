@@ -1,0 +1,16 @@
+{{ define "add_page" }}
+
+{{ template "header" }}
+
+    <main>
+        <h1>Форма добавления предмета</h1>
+        <form action="/save/" method="post">
+            <input type="text" name="subj" id="subj" placeholder="Введите названия предмета" autocomplete="off">
+            <input type="number" step="any" name="sum" id="sum" placeholder="Введите сколько баллов на данный момент">
+            <button class="btn">Добавить</button>
+        </form>
+    </main>
+
+{{ template "footer" }}
+
+{{ end }}

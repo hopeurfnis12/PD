@@ -1,4 +1,44 @@
 main {
-	margin: 0 200px;
-	border: 2px solid;
+	margin: 20px 200px;
+}
+
+main p {
+	font-size: 20px;
+}
+
+main h1 {
+	font-family: Nunito-Light;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+main h2 {
+	font-family: Nunito-Light;
+	font-size: 16px;
+}
+
+.subject {
+	margin: 20px 0;
+}
+
+.btn-info {
+	display: flex;
+	margin: auto 0px;
+	color: black;
+	opacity: 0.4;
+	transition: all ease 0.5s;
+}
+
+.btn-info:hover {
+	opacity: 1;
+	transition: all ease 0.3s;
+}
+
+.btn-info img {
+	height: 30px;
+	width: auto;
+}
+
+.btn-info h1 {
+	margin: auto 0px;
 }
