@@ -9,7 +9,6 @@ main p {
 main h1 {
 	font-family: Nunito-Light;
 	font-size: 24px;
-	font-weight: bold;
 }
 
 main h2 {
@@ -17,8 +16,12 @@ main h2 {
 	font-size: 16px;
 }
 
+
+
+
+
 .subject {
-	margin: 20px 0;
+	margin-bottom: 20px;
 }
 
 .btn-info {
@@ -26,7 +29,7 @@ main h2 {
 	margin: auto 0px;
 	color: black;
 	opacity: 0.4;
-	transition: all ease 0.5s;
+	transition: all ease 0.4s;
 }
 
 .btn-info:hover {
@@ -41,4 +44,85 @@ main h2 {
 
 .btn-info h1 {
 	margin: auto 0px;
+}
+
+.subject h2 {
+	margin-left: 5px;
+}
+
+
+
+
+
+
+.form-add-title {
+	margin-bottom: 20px;
+}
+
+main form {
+	margin-left: 10px;
+    display: grid;
+    justify-items: start;
+}
+
+main form input {
+	width: 300px;
+	padding: 2px 5px;
+	border-style: none none solid none;
+	border-color: rgba(0, 0, 0, 0.3);
+	margin-bottom: 20px;
+}
+
+main form input#sum {
+	width: 100px;
+}
+
+main form input:hover {
+	border-color: rgba(0, 0, 0, 1);
+}
+
+main form input:focus {
+	outline: none;
+	border-color: #fa0;
+}
+
+.btn {
+	padding: 5px 10px;
+	font-size: 14px;
+	font-family: Nunito-Light;
+	font-weight: bold;
+	border: 2px solid;
+	background-color: rgba(0, 0, 0, 0);
+	transition: all ease 0.4s;
+}
+
+.btn:hover {
+	color: rgba(0, 0, 0, 1);
+	border-color: #fa0;
+	transform: scale(1.2);
+	transition: all ease 0.3s;
+}
+
+
+
+
+
+
+.todo {
+	margin-bottom: 50px;
+	border-width: 2px;
+	border-style: none none solid none;
+}
+
+.todo h2 {
+	margin-bottom: 10px;
+	font-family: Ceveat-Regular;
+	font-size: 26px;
+}
+
+.todo p {
+	margin-left: 5px;
+	margin-bottom: 15px;
+	font-family: Nunito-Light;
+	font-size: 16px;
 }

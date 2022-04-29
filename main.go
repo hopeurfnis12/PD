@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gorilla/mux"
 )
 
 type Subjects struct {
@@ -15,7 +16,15 @@ type Subjects struct {
 	Sum     float32
 }
 
+type Todo_list struct {
+	Id         uint16
+	Subject_id uint16
+	Todo       string
+	Score      float32
+}
+
 var subjs = []Subjects{}
+var todo_list = []Todo_list{}
 
 /* ///////////////// HOME ///////////////// */
 func home_page(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +82,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 	sum := r.FormValue("sum")
 
 	if subj == "" || sum == "" {
-		http.Redirect(w, r, "/add#error", http.StatusSeeOther)
+		http.Redirect(w, r, "/add?error", http.StatusSeeOther)
 	} else {
 		db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/diary")
 		if err != nil {
@@ -91,13 +100,60 @@ func save(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/* ///////////////// SUBJECT ///////////////// */
+func subject_show(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	t, err := template.ParseFiles("templates/subject_show.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		panic(err)
+	}
+
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/diary")
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	res, err := db.Query(fmt.Sprintf("SELECT * FROM `todo_list` WHERE `subject_id` = '%s'", vars["id"]))
+	if err != nil {
+		panic(err)
+	}
+
+	// m := map[string]interface{}{}
+	// m["todo_list"] = []Todo_list{}
+	// m["title"], err = db.Query(fmt.Sprintf("SELECT `subject` FROM `subjects` WHERE `id` = '%s'", vars["id"]))
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	todo_list = []Todo_list{}
+	for res.Next() {
+		var todo Todo_list
+		err = res.Scan(&todo.Id, &todo.Subject_id, &todo.Todo, &todo.Score)
+		if err != nil {
+			panic(err)
+		}
+
+		todo_list = append(todo_list, todo)
+	}
+
+	t.ExecuteTemplate(w, "subject_show", todo_list)
+}
+
+/* ///////////////// handle ///////////////// */
 func handleRequest() {
+	rtr := mux.NewRouter()
+
 	fs := http.FileServer(http.Dir("static"))
+	rtr.HandleFunc("/", home_page).Methods("GET")
+	rtr.HandleFunc("/subjects/", subjects_page).Methods("GET")
+	rtr.HandleFunc("/add/", add_page).Methods("GET")
+	rtr.HandleFunc("/save/", save).Methods("POST")
+	rtr.HandleFunc("/subject/{id:[0-9]+}", subject_show).Methods("GET")
+
+	http.Handle("/", rtr)
 	http.Handle("/static/", http.StripPrefix("/static", fs))
-	http.HandleFunc("/", home_page)
-	http.HandleFunc("/subjects/", subjects_page)
-	http.HandleFunc("/add/", add_page)
-	http.HandleFunc("/save/", save)
 	http.ListenAndServe(":7272", nil)
 }
 

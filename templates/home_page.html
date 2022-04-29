@@ -6,14 +6,15 @@
 		
 		{{ range . }}
 			<div class="subject">
-					<a href="/subject/{{ .Id }}" class="btn-info">
-						<h1> {{ .Subject }} </h1> <img src="/static/icons/angle-right.svg">
-					</a>
-					<h2> Баллы: {{ .Sum }} </h2>
+				<a href="/subject/{{ .Id }}" class="btn-info">
+					<h1> {{ .Subject }} </h1> <img src="/static/icons/angle-right.svg">
+				</a>
+				<h2> Баллы: {{ .Sum }} </h2>
 			</div>
 		{{ else }}
 			<h1>Пусто...</h1>
 		{{ end }}
+		
 	</main>
 
 {{ template "footer" }}

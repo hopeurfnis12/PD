@@ -1,0 +1,24 @@
+{{ define "subject_show" }}
+
+{{ template "header" }}
+
+	<main>
+        
+        <h1>
+            
+        </h1>
+
+		{{ range . }}
+            <div class="todo">
+                <h2> {{ .Todo }} </h2>
+                <p> <b>Баллов:</b> {{ .Score }} </p>
+            </div>
+        {{ else }}
+            <h1>Нет домашек</h1>
+        {{ end }}
+
+	</main>
+
+{{ template "footer" }}
+
+{{ end }}

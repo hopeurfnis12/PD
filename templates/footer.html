@@ -7,12 +7,37 @@
             <h1>Nunito_Light</h1>
             <h2>Noto_Sans_ExtraLight</h2>
             <h3>Ceveat_Regular</h3>
-            <a id="add" href="/add/">ADD</a>
-            <a id="subjects" href="/subjects/">SUBJECTS</a>
+            <a id="add" href="/add">ADD</a>
+            <a id="subjects" href="/subjects">SUBJECTS</a>
             <a id="home" href="/" id="home">HOME</a>
         </nav>
     </div>
 </footer>
+
+<script>
+    const queryString = window.location.href;
+    let a = document.getElementById('home');
+    if(queryString.includes("/add/"))
+    {
+        a = document.getElementById('add');
+        console.log("add");
+    }
+    else
+    if(queryString.includes("/subjects/"))
+    {
+        a = document.getElementById('subjects');
+        console.log("subjects");
+    }
+    else
+    if(queryString.includes("/subject/"))
+    {
+        a = document.getElementById('subject');
+        console.log("subject");
+    }
+    a.style.fontWeight = "bold";
+    a.style.color = "black";
+</script>
+
 </body>
 </html>
 
