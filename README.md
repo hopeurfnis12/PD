@@ -7,6 +7,9 @@
 * [Git](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop)
 * [Golang](https://go.dev/doc/install)
 * [MySQL](https://dev.mysql.com/downloads/mysql/)
+* [phpMyAdmin](https://www.phpmyadmin.net/)
+
+> я использовал для работы с **phpMyAdmin** [OpenServer](https://ospanel.io/) 
 
 ### Go пакеты:
 * `go get github.com/go-sql-driver/mysql`
@@ -16,7 +19,7 @@
 
 ### Запуск:
 * `git clone https://github.com/hopeurfnis12/PD.git`
-* Настроить phpMyAdmin
+* Поменять в **main.go** `user` и `pswr` для БД
 * Запустить сервер `go run main.go` 	
 * В браузере перейти по адресу `http://localhost:7272/`
 
