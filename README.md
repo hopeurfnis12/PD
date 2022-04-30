@@ -8,11 +8,14 @@
 * [Golang](https://go.dev/doc/install)
 * [MySQL](https://dev.mysql.com/downloads/mysql/)
 
+### Go пакеты:
+* `go get github.com/go-sql-driver/mysql`
+* `go get -u github.com/gorilla/mux`
+
+> если выходит ошибка:  `go.mod file not found in current directory or any parent directory.` то попробуйте ввести `go env -w GO111MODULE=off`
+
 ### Запуск:
 * `git clone https://github.com/hopeurfnis12/PD.git`
-* `go get github.com/go-sql-driver/mysql` - скачать **MySQL Driver**
-  > если выходит ошибка:  `go.mod file not found in current directory or any parent directory.` то попробуйте ввести `go env -w GO111MODULE=off`
-* `go get -u github.com/gorilla/mux` - скачать
 * Настроить phpMyAdmin
 * Запустить сервер `go run main.go` 	
 * В браузере перейти по адресу `http://localhost:7272/`
