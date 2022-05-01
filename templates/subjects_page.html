@@ -4,6 +4,50 @@
 
     <main>
 
+        <details class="add-head">
+            <summary><h1>Добавить предмет</h1></summary>
+            <form class="add-form" action="/save/" method="post">
+                <input type="text" autocomplete="off" name="subj" id="subj" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Название предмета">
+                <button class="btn" id="btn">Добавить</button>
+            </form>
+        </details>
+        
+        <script>
+            check();
+            function check() {
+                const input = document.getElementById('subj');
+                const btn = document.getElementById("btn");
+                if(input.value === '') {
+                    btn.style.pointerEvents = 'none';
+                    btn.style.opacity = 0.3;
+                }
+                else
+                {
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.opacity = 1;
+                }
+            }
+        </script>
+
+        {{ range . }}
+        <div class="subject">
+            <div>
+                <a href="/subject/{{ .Id }}" class="btn-info">
+                    <h1> {{ .Subject }} </h1> <img src="/static/icons/angle-right.svg">
+                </a>
+                {{ if eq .Count 0 }}
+                <!-- Заданий нет -->
+                {{ else }}
+                <h2> Осталось заданий: {{ .Count }} </h2>
+                {{ end }}
+            </div>
+            <a href="/del_subj/{{ .Id }}" class="btn-a" style="text-align: right;">Удалить</a>
+
+			</div>
+		{{ else }}
+			<h1>Пусто...</h1>
+		{{ end }}
+
     </main>
 
 {{ template "footer" }}

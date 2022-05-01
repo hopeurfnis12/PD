@@ -4,17 +4,73 @@
 
 	<main>
         
-        <h1>
+        <details class="add-head">
+            <summary><h1>Добавить задание</h1></summary>
+            <!-- <form class="add-form" action="Savetask()" method="post">    
+                <input type="text" autocomplete="off" name="task" id="task" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Задание">
+                <button class="btn" id="btn">Добавить</button>
+            </form> -->
             
-        </h1>
+            <span id="form"></span>
+            <span id="form_end"></span>
+            
+        </details>
+        
+        <script>
+            const subj_id = window.location.pathname;
+            let id = subj_id.split('/')
+            
+            let form = document.createElement('form');
+            form.action = '/save_task/' + id[2];
+            form.method = 'post';
+            form.innerHTML = '<input type="text" autocomplete="off" name="task" id="task" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Задание">';
+            form.innerHTML += '<button class="btn" id="btn">Добавить</button>';
+            document.getElementById('form').append(form);
+
+            check();
+            function check() {
+                const input = document.getElementById('task');
+                const btn = document.getElementById("btn");
+                if(input.value === '') {
+                    btn.style.pointerEvents = 'none';
+                    btn.style.opacity = 0.3;
+                }
+                else
+                {
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.opacity = 1;
+                }
+            }
+        </script>
 
 		{{ range . }}
+
             <div class="todo">
-                <h2> {{ .Todo }} </h2>
-                <p> <b>Баллов:</b> {{ .Score }} </p>
+                <nav class="task">
+                    {{ if .Do }}
+                        <del> <h2> {{ .Todo }} </h2> </del>
+                    {{ else }}
+                        <h2> {{ .Todo }} </h2>
+                    {{ end }}
+                </nav>
+
+                <nav class="buttons">
+                    <nav class="add-edit">
+                        <a href="#{{ .Id }}" class="btn-a"> Изменить </a>
+                        <a href="/do/{{ .Subject_id }}/{{ .Id }}/{{ .Do }}" class="btn-a">
+                            {{ if .Do }}
+                                Не делано
+                            {{ else }}
+                                Сделано
+                            {{ end }}
+                        </a>
+                    </nav>
+                    <a href="/del/{{ .Subject_id }}/{{ .Id }}" class="btn-a" style="text-align: right;"> Удалить </a>
+                </nav>
             </div>
+
         {{ else }}
-            <h1>Нет домашек</h1>
+            <h1>Нет заданий</h1>
         {{ end }}
 
 	</main>
