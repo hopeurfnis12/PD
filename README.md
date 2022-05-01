@@ -17,6 +17,7 @@
 
 ### Запуск:
 * `git clone https://github.com/hopeurfnis12/PD.git`
+* Импортировать бд **diary.sql** в **phpMyAdmin**
 * Поменять в **main.go** `user` и `pswr` для авторизации в **phpMyAdmin**
 * Запустить сервер `go run main.go` 	
 * В браузере перейти по адресу `http://localhost:7272/`

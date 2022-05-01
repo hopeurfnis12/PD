@@ -7,7 +7,8 @@
         <details class="add-head">
             <summary><h1>Добавить предмет</h1></summary>
             <form class="add-form" action="/save/" method="post">
-                <input type="text" autocomplete="off" name="subj" id="subj" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Название предмета">
+                <input class="input" type="text" autocomplete="off" name="subj" id="subj"
+                onchange="check()" onkeyup="check()" oninput="check()" maxlength="45" placeholder="Название предмета">
                 <button class="btn" id="btn">Добавить</button>
             </form>
         </details>
@@ -30,7 +31,9 @@
         </script>
 
         {{ range . }}
+        
         <div class="subject">
+            
             <div>
                 <a href="/subject/{{ .Id }}" class="btn-info">
                     <h1> {{ .Subject }} </h1> <img src="/static/icons/angle-right.svg">
@@ -41,12 +44,40 @@
                 <h2> Осталось заданий: {{ .Count }} </h2>
                 {{ end }}
             </div>
-            <a href="/del_subj/{{ .Id }}" class="btn-a" style="text-align: right;">Удалить</a>
 
-			</div>
+            <nav class="btns">
+                <a onclick="show('{{.Id}}', '{{.Subject}}')" class="btn-a">Изменить</a>
+                <a href="/del_subj/{{.Id}}" class="btn-a">Удалить</a>
+            </nav>
+
+		</div>
+
 		{{ else }}
 			<h1>Пусто...</h1>
 		{{ end }}
+        
+        <span id="edit_form"></span>
+        
+        <script>
+            function show(id_subj, subj_name) {
+                console.log(subj_name)
+                const form = document.getElementById("edit_form")
+                form.innerHTML = 
+                `<form id="show" action="/edit_subj/${id_subj}" method="post">` +
+                    `<input class="input" type="text" autocomplete="off" name="subj-edit" id="subj-edit"` +
+                    `maxlength="45" placeholder="Задание" value="${subj_name}">` +
+                    `<div class="edit_div">` +
+                        `<button class="btn" id="btn">Изменить</button>` +
+                        `<a onclick="hide()" class="btn-a" id="btn">Отменить</a>` +
+                    `</div>` +
+                `</form>`;
+            }
+
+            function hide() {
+                const form = document.getElementById("edit_form");
+                form.innerHTML = ""
+            }
+        </script>
 
     </main>
 

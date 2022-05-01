@@ -97,6 +97,26 @@ func save(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/* ///////////////// EDIT_SUBJ ///////////////// */
+func edit_subj(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	subjed := r.FormValue("subj-edit")
+
+	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	ed, err := db.Query(fmt.Sprintf("UPDATE `subjects` SET `subject`='%s' WHERE `id` = '%s'", subjed, vars["id"]))
+	if err != nil {
+		panic(err)
+	}
+	defer ed.Close()
+
+	http.Redirect(w, r, "/subjects/", http.StatusSeeOther)
+}
+
 /* ///////////////// DEL_SUBJ ///////////////// */
 func del_subj(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -199,6 +219,26 @@ func do(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/subject/"+vars["id_subj"], http.StatusSeeOther)
 }
 
+/* ///////////////// EDIT ///////////////// */
+func edit(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	tasked := r.FormValue("task-edit")
+
+	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	ed, err := db.Query(fmt.Sprintf("UPDATE `todo_list` SET `todo`='%s' WHERE `id` = '%s'", tasked, vars["id_task"]))
+	if err != nil {
+		panic(err)
+	}
+	defer ed.Close()
+
+	http.Redirect(w, r, "/subject/"+vars["id_subj"], http.StatusSeeOther)
+}
+
 /* ///////////////// DEL ///////////////// */
 func del(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -209,11 +249,11 @@ func del(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	upd, err := db.Query(fmt.Sprintf("DELETE FROM `todo_list` WHERE `id`='%s'", vars["id_task"]))
+	del, err := db.Query(fmt.Sprintf("DELETE FROM `todo_list` WHERE `id`='%s'", vars["id_task"]))
 	if err != nil {
 		panic(err)
 	}
-	defer upd.Close()
+	defer del.Close()
 
 	http.Redirect(w, r, "/subject/"+vars["id_subj"], http.StatusSeeOther)
 }
@@ -224,12 +264,16 @@ func handleRequest() {
 
 	fs := http.FileServer(http.Dir("static"))
 	rtr.HandleFunc("/", home_page).Methods("GET")
+
 	rtr.HandleFunc("/subjects/", subjects_page).Methods("GET")
 	rtr.HandleFunc("/save/", save).Methods("POST")
-	rtr.HandleFunc("/subject/{id:[0-9]+}", subject_show).Methods("GET")
+	rtr.HandleFunc("/edit_subj/{id:[0-9]+}", edit_subj).Methods("POST", "GET")
 	rtr.HandleFunc("/del_subj/{id:[0-9]+}", del_subj).Methods("POST", "GET")
+
+	rtr.HandleFunc("/subject/{id:[0-9]+}", subject_show).Methods("GET")
 	rtr.HandleFunc("/save_task/{id_subj:[0-9]+}", save_task).Methods("POST")
 	rtr.HandleFunc("/do/{id_subj:[0-9]+}/{id_task:[0-9]+}/{do:[0-1]}", do).Methods("POST", "GET")
+	rtr.HandleFunc("/edit/{id_subj:[0-9]+}/{id_task:[0-9]+}", edit).Methods("POST", "GET")
 	rtr.HandleFunc("/del/{id_subj:[0-9]+}/{id_task:[0-9]+}", del).Methods("POST", "GET")
 
 	http.Handle("/", rtr)

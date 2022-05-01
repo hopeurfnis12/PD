@@ -7,7 +7,7 @@
         <details class="add-head">
             <summary><h1>Добавить задание</h1></summary>
             <!-- <form class="add-form" action="Savetask()" method="post">    
-                <input type="text" autocomplete="off" name="task" id="task" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Задание">
+                <input  type="text" autocomplete="off" name="task" id="task" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Задание">
                 <button class="btn" id="btn">Добавить</button>
             </form> -->
             
@@ -23,7 +23,7 @@
             let form = document.createElement('form');
             form.action = '/save_task/' + id[2];
             form.method = 'post';
-            form.innerHTML = '<input type="text" autocomplete="off" name="task" id="task" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Задание">';
+            form.innerHTML = '<textarea autocomplete="off" name="task" id="task" onchange="check()" onkeyup="check()" oninput="check()" placeholder="Задание"></textarea>'
             form.innerHTML += '<button class="btn" id="btn">Добавить</button>';
             document.getElementById('form').append(form);
 
@@ -48,15 +48,16 @@
             <div class="todo">
                 <nav class="task">
                     {{ if .Do }}
-                        <del> <h2> {{ .Todo }} </h2> </del>
+                        <del> <h2 id="{{.Id}}"> {{ .Todo }} </h2> </del>
                     {{ else }}
-                        <h2> {{ .Todo }} </h2>
+                        <h2 id="{{.Id}}"> {{ .Todo }} </h2>
                     {{ end }}
                 </nav>
 
                 <nav class="buttons">
                     <nav class="add-edit">
-                        <a href="#{{ .Id }}" class="btn-a"> Изменить </a>
+
+                        <a onclick="show('{{.Id}}', '{{.Todo}}', '{{.Subject_id}}')" class="btn-a">Изменить</a>
                         <a href="/do/{{ .Subject_id }}/{{ .Id }}/{{ .Do }}" class="btn-a">
                             {{ if .Do }}
                                 Не делано
@@ -72,6 +73,28 @@
         {{ else }}
             <h1>Нет заданий</h1>
         {{ end }}
+
+        <span id="edit_form"></span>
+
+        <script>
+            function show(id_task, todo, subj_id) {
+                const form = document.getElementById("edit_form")
+                form.innerHTML = 
+                `<form id="show" action="/edit/${subj_id}/${id_task}" method="post">` +
+                    `<textarea autocomplete="off" name="task-edit" id="task-edit"` +
+                    `placeholder="Задание">${todo}</textarea>` +
+                    `<div class="edit_div">` +
+                        `<button class="btn" id="btn">Изменить</button>` +
+                        `<a onclick="hide()" class="btn-a" id="btn">Отменить</a>` +
+                    `</div>` +
+                `</form>`;
+            }
+
+            function hide() {
+                const form = document.getElementById("edit_form");
+                form.innerHTML = ""
+            }
+        </script>
 
 	</main>
 
