@@ -48,9 +48,9 @@
             <div class="todo">
                 <nav class="task">
                     {{ if .Do }}
-                        <del> <h2 id="{{.Id}}"> {{ .Todo }} </h2> </del>
+                        <del> <h2 class="text" id="{{.Id}}"> {{ .Todo }} </h2> </del>
                     {{ else }}
-                        <h2 id="{{.Id}}"> {{ .Todo }} </h2>
+                        <h2 class="text" id="{{.Id}}"> {{ .Todo }} </h2>
                     {{ end }}
                 </nav>
 
