@@ -29,13 +29,13 @@ var subjs = []Subjects{}
 var todo_list = []TodoList{}
 
 /* ///////////////// HOME ///////////////// */
-func home_page(w http.ResponseWriter, r *http.Request) {
+func HomePage(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("templates/home_page.html", "templates/header.html", "templates/footer.html")
 	if err != nil {
 		panic(err)
 	}
 
-	t.ExecuteTemplate(w, "home_page", subjs)
+	t.ExecuteTemplate(w, "HomePage", subjs)
 }
 
 /* ///////////////// SUBJECTS ///////////////// */
@@ -263,7 +263,7 @@ func handleRequest() {
 	rtr := mux.NewRouter()
 
 	fs := http.FileServer(http.Dir("static"))
-	rtr.HandleFunc("/", home_page).Methods("GET")
+	rtr.HandleFunc("/", HomePage).Methods("GET")
 
 	rtr.HandleFunc("/subjects/", subjects_page).Methods("GET")
 	rtr.HandleFunc("/save/", save).Methods("POST")
