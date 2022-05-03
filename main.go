@@ -17,10 +17,10 @@ type Subjects struct {
 }
 
 type TodoList struct {
-	Id         uint16
-	Subject_id uint16
-	Todo       string
-	Do         int16
+	Id        uint16
+	SubjectID uint16
+	Todo      string
+	Do        int16
 }
 
 var user = "root"
@@ -159,7 +159,7 @@ func subject_show(w http.ResponseWriter, r *http.Request) {
 	todo_list = []TodoList{}
 	for res.Next() {
 		var todo TodoList
-		err = res.Scan(&todo.Id, &todo.Subject_id, &todo.Todo, &todo.Do)
+		err = res.Scan(&todo.Id, &todo.SubjectID, &todo.Todo, &todo.Do)
 		if err != nil {
 			panic(err)
 		}
