@@ -16,7 +16,7 @@ type Subjects struct {
 	Count   int16
 }
 
-type Todo_list struct {
+type TodoList struct {
 	Id         uint16
 	Subject_id uint16
 	Todo       string
@@ -26,7 +26,7 @@ type Todo_list struct {
 var user = "root"
 var pswr = ""
 var subjs = []Subjects{}
-var todo_list = []Todo_list{}
+var todo_list = []TodoList{}
 
 /* ///////////////// HOME ///////////////// */
 func home_page(w http.ResponseWriter, r *http.Request) {
@@ -156,9 +156,9 @@ func subject_show(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	todo_list = []Todo_list{}
+	todo_list = []TodoList{}
 	for res.Next() {
-		var todo Todo_list
+		var todo TodoList
 		err = res.Scan(&todo.Id, &todo.Subject_id, &todo.Todo, &todo.Do)
 		if err != nil {
 			panic(err)
