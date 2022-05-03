@@ -24,7 +24,7 @@ type TodoList struct {
 }
 
 var user = "root"
-var pswr = ""
+var password = ""
 var subjs = []Subjects{}
 var todo_list = []TodoList{}
 
@@ -44,7 +44,7 @@ func subjects_page(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 	if err != nil {
 		panic(err)
 	}
@@ -81,7 +81,7 @@ func save(w http.ResponseWriter, r *http.Request) {
 	if subj == "" {
 		http.Redirect(w, r, "/?error", http.StatusSeeOther)
 	} else {
-		db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+		db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 		if err != nil {
 			panic(err)
 		}
@@ -102,7 +102,7 @@ func edit_subj(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	subjed := r.FormValue("subj-edit")
 
-	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 	if err != nil {
 		panic(err)
 	}
@@ -121,7 +121,7 @@ func edit_subj(w http.ResponseWriter, r *http.Request) {
 func del_subj(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 	if err != nil {
 		panic(err)
 	}
@@ -145,7 +145,7 @@ func subject_show(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 	if err != nil {
 		panic(err)
 	}
@@ -178,7 +178,7 @@ func save_task(w http.ResponseWriter, r *http.Request) {
 	if task == "" {
 		http.Redirect(w, r, "/?error", http.StatusSeeOther)
 	} else {
-		db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+		db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 		if err != nil {
 			panic(err)
 		}
@@ -199,7 +199,7 @@ func do(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	var do_make = 0
 
-	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 	if err != nil {
 		panic(err)
 	}
@@ -224,7 +224,7 @@ func edit(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	tasked := r.FormValue("task-edit")
 
-	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 	if err != nil {
 		panic(err)
 	}
@@ -243,7 +243,7 @@ func edit(w http.ResponseWriter, r *http.Request) {
 func del(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	db, err := sql.Open("mysql", user+":"+pswr+"@tcp(127.0.0.1:3306)/diary")
+	db, err := sql.Open("mysql", user+":"+password+"@tcp(127.0.0.1:3306)/diary")
 	if err != nil {
 		panic(err)
 	}
