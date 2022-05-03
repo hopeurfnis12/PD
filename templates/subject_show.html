@@ -57,8 +57,8 @@
                 <nav class="buttons">
                     <nav class="add-edit">
 
-                        <a onclick="show('{{.Id}}', '{{.Todo}}', '{{.Subject_id}}')" class="btn-a">Изменить</a>
-                        <a href="/do/{{ .Subject_id }}/{{ .Id }}/{{ .Do }}" class="btn-a">
+                        <a onclick="show('{{.Id}}', '{{.Todo}}', '{{.SubjectID}}')" class="btn-a">Изменить</a>
+                        <a href="/do/{{ .SubjectID }}/{{ .Id }}/{{ .Do }}" class="btn-a">
                             {{ if .Do }}
                                 Не делано
                             {{ else }}
@@ -66,7 +66,7 @@
                             {{ end }}
                         </a>
                     </nav>
-                    <a href="/del/{{ .Subject_id }}/{{ .Id }}" class="btn-a" style="text-align: right;"> Удалить </a>
+                    <a href="/del/{{ .SubjectID }}/{{ .Id }}" class="btn-a" style="text-align: right;"> Удалить </a>
                 </nav>
             </div>
 
