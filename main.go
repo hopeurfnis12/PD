@@ -38,9 +38,13 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "HomePage", subjs)
 }
 
-/* ///////////////// SUBJECTS ///////////////// */
+/*
+Список субъектов
+Хэндлер отображает список субъектов на странице
+*/
 func subjects_page(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("templates/subjects_page.html", "templates/header.html", "templates/footer.html")
+	// todo: refactor - Вынести в отдельную функцию
 	if err != nil {
 		panic(err)
 	}
@@ -50,6 +54,7 @@ func subjects_page(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
+	// todo: можно вынести в отдельный интерфейс
 	res, err := db.Query("SELECT * FROM `subjects` ORDER BY `Id` DESC")
 	if err != nil {
 		panic(err)
